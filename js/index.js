@@ -1,13 +1,13 @@
-import '../css/main.css';
+import '../css/base.css';
 import Vue from 'vue';
-import Game from './components/Game';
-import store from './vuex/store';
+import Main from './components/main';
+import store from './store/store';
 
 //the main entrance
 /* eslint-disable no-new */
 new Vue({
     el: '#application',
     render(h) {
-        return h(Game);
+        return h(Main);
     },
     store});

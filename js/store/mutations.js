@@ -1,0 +1,17 @@
+export default {
+    addTableNameItem(state, tableNameItem) {
+        state.tableNameItemList.push(tableNameItem);
+    },
+    selectedViewNameItem(state, currentViewNameItem) {
+        //首先将所有的都置为false,再将当前的置为true
+        state.tableNameItemList.forEach(function(item) {
+            item.viewNameItemList.forEach(function(viewItem) {
+                viewItem.active = false;
+            });
+        });
+        currentViewNameItem.active = true;
+    },
+    setModalOptionType(state, modalOptionType) {
+        state.modalOptionType = modalOptionType;
+    }
+}

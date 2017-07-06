@@ -16,8 +16,7 @@ module.exports = {
                     loader: 'vue-loader',
                     options: {
                         loaders: {
-                            js: 'babel-loader',
-                            css: 'vue-style-loader!css-loader'
+                            js: 'babel-loader'
                         }
                     }
                 }],

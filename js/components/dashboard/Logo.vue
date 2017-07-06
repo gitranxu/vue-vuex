@@ -8,16 +8,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .logo{
     width: 160px;
     height: 100px;
     line-height: 90px;
     padding: 5px;
     border-radius: 5px;
-    background-color: #5979ac;
+    background-color: green;
     color: #fff;
     text-align: center;
+    a{
+        color: red;
+    }
 }
 a {
     text-decoration: none;
