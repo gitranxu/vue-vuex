@@ -9,3 +9,28 @@ html, body {
     height: 100%;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
+
+.btn{
+    background: transparent;
+    color: #fff;
+    font-weight: 200;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 18px;
+    font-size: 14px;
+}
+.btn-primary{
+    background: #8aa891;
+}
+.btn-primary:hover{
+    background: #6d9276;
+}
+.btn-second{
+    color: #919ba7;
+    background: transparent;
+}
+.btn-second:hover{
+    color: #697583;
+}

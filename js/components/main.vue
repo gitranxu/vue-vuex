@@ -10,10 +10,7 @@
            <content-zone></content-zone>
        </main-body>
        <tools>
-           <modal-dialog v-if="modalOptionType !== ''">
-               <create-table-name-item></create-table-name-item>
-               <another></another>
-           </modal-dialog>
+           <modal-dialogs></modal-dialogs>
        </tools>
     </div>
 </template>
@@ -30,10 +27,7 @@ import leftSlider from './body/left-slider';
 import contentZone from './body/content-zone';
 
 import tools from './tools/tools';
-import modalDialog from './tools/modal-dialog';
-import createTableNameItem from './tools/create-table-name-item';
-import another from './tools/another';
-
+import modalDialogs from './tools/modal-dialogs';
 
 import { mapState } from 'vuex';
 // import { STATUS } from '../vuex/store/statusEnum';
@@ -69,9 +63,7 @@ export default {
         leftSlider,
         contentZone,
         tools,
-        modalDialog,
-        createTableNameItem,
-        another
+        modalDialogs
     }
 }
 </script>

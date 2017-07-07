@@ -1,6 +1,6 @@
 <template>
     <div class="button-cntr">
-        <div class="add-table-button" @click="addTableNameItemClick">
+        <div class="add-table-button btn btn-primary" @click="addTableNameItemClick">
             添加表格
         </div>
     </div>
@@ -32,20 +32,6 @@ export default {
 <style lang="less" scoped>
     .button-cntr{
         margin: 20px 30px;
-        .add-table-button{
-            background: #8aa891;
-            color: #fff;
-            font-weight: 200;
-            text-align: center;
-            vertical-align: middle;
-            cursor: pointer;
-            user-select: none;
-            padding: 4px 18px;
-            font-size: 14px;
-            &:hover{
-                background: #6d9276;
-            }
-        }
     }
 
 </style>
