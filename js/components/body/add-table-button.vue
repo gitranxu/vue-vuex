@@ -12,17 +12,6 @@ export default {
     methods: {
         ...mapActions(['addTableNameItem', 'setModalOptionType']),
         addTableNameItemClick() {
-            //这里先写死
-            // let newTableNameItem = {
-            //     name: '美不美',
-            //     viewNameItemList: [
-            //         {
-            //             name: '全部数据',
-            //             active: false
-            //         }
-            //     ]
-            // };
-            // this.addTableNameItem(newTableNameItem);
             this.setModalOptionType('createTableNameItem');
         }
     }

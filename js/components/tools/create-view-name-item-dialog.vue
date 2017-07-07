@@ -1,11 +1,14 @@
 <template>
-    <div class="create-table-name-item-dialog" v-if="modalOptionType === 'createTableNameItem'">
+    <div class="create-view-name-item-dialog" v-if="modalOptionType === 'createViewNameItem'">
         <modal-dialog>
             <div class="" slot="modal-header">
-                <h3>添加表格</h3>
+                <h3>添加视图</h3>
             </div>
             <div class="" slot="modal-body">
-                <input type="text" name="" value="" v-model="tableNameItemAddInfo.name" placeholder="表格名称">
+                <div class="note">
+                    视图可以用来快速访问满足特定条件的数据。在每个视图里，可以设置不同的筛选、排序、隐藏列的条件，这些条件都会实时保存。
+                </div>
+                <input type="text" name="" value="" v-model="addInfo.name" placeholder="视图名称">
                 <div class="buttons">
                     <button type="button" class="btn btn-second btn-cancel" name="button" @click="cancel">取消</button>
                     <button type="button" class="btn btn-primary btn-add" name="button" @click="add">添加</button>
@@ -22,7 +25,7 @@ import tool from '../../lib/tool';
 export default {
     data() {
         return {
-            tableNameItemAddInfo:{
+            addInfo:{
                 name: ''
             }
         }
@@ -31,7 +34,7 @@ export default {
         ...mapState(['modalOptionType'])
     },
     methods: {
-        ...mapActions(['setModalOptionType','addTableNameItem']),
+        ...mapActions(['setModalOptionType','addViewNameItem','setCurrentTableNameItem']),
         // change() {
         //     this.setModalOptionType('another');
         // }
@@ -39,20 +42,10 @@ export default {
             this.setModalOptionType('');
         },
         add() {
-            let newTableNameItem = {
-                name: this.tableNameItemAddInfo.name,
-                id: tool.uuid(),
-                viewNameItemList: [  //这部分数据是增加时默认的
-                    {
-                        name: '全部数据',
-                        id: 0,
-                        active: false
-                    }
-                ]
-            };
-            this.addTableNameItem(newTableNameItem);
-            this.tableNameItemAddInfo.name = '';
+            this.addViewNameItem({name: this.addInfo.name, id: tool.uuid(), active: false});
+            this.addInfo.name = '';
             this.setModalOptionType('');
+            this.setCurrentTableNameItem(null);
         }
     },
     components:{
@@ -62,7 +55,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    .create-table-name-item-dialog{
+    .create-view-name-item-dialog{
         h3{
             font-size: 18px;
             font-weight: 500;
@@ -75,6 +68,15 @@ export default {
             background: #fff;
             border: 1px solid #cccccc;
             border-radius: 4px;
+        }
+        .note{
+            padding: 5px 8px;
+            margin-bottom: 10px;
+            color: #919ba7;
+            background: #f9f9f9;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 200;
         }
         .buttons{
             margin: 30px -30px 0 -30px;

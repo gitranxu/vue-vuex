@@ -12,6 +12,8 @@ html, body {
 
 .btn{
     background: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
     color: #fff;
     font-weight: 200;
     text-align: center;

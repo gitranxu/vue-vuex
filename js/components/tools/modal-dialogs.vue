@@ -1,18 +1,18 @@
 <template>
     <div class="modal-dialogs">
         <create-table-name-item-dialog></create-table-name-item-dialog>
-        <another></another>
+        <create-view-name-item-dialog></create-view-name-item-dialog>
     </div>
 </template>
 
 <script>
 import createTableNameItemDialog from './create-table-name-item-dialog';
-import another from './another';
+import createViewNameItemDialog from './create-view-name-item-dialog';
 
 export default {
     components:{
         createTableNameItemDialog,
-        another
+        createViewNameItemDialog
     }
 }
 </script>

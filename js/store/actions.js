@@ -7,5 +7,11 @@ export default {
     },
     setModalOptionType({commit}, modalOptionType) {
         commit('setModalOptionType', modalOptionType);
+    },
+    setCurrentTableNameItem({commit}, tableNameItem) {
+        commit('setCurrentTableNameItem', tableNameItem);
+    },
+    addViewNameItem({commit}, viewNameItem) {
+        commit('addViewNameItem', viewNameItem);
     }
 }

@@ -13,5 +13,12 @@ export default {
     },
     setModalOptionType(state, modalOptionType) {
         state.modalOptionType = modalOptionType;
+    },
+    setCurrentTableNameItem(state, tableNameItem) {
+        state.currentTableNameItem = tableNameItem;
+    },
+    addViewNameItem(state, viewNameItem) {
+        state.tableNameItemList.filter(tableNameItem => tableNameItem.id == state.currentTableNameItem.id)[0]
+            .viewNameItemList.push(viewNameItem);
     }
 }
