@@ -48,7 +48,7 @@ module.exports = {
             filename: 'index.html',
             inject: 'body',
             template: 'index.html_vm',
-            favicon: 'img/favicon.ico',
+            favicon: 'img/sun.ico',
             hash: false
         })
     ]
