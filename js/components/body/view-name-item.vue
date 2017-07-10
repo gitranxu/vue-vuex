@@ -2,6 +2,7 @@
     <div class="view-name-item" @click="viewNameItemClick" :class="{active: viewNameItem.active}">
         <div class="view-name">
             {{viewNameItem.name}}
+            <span class="arrow-down" @click="showOptionItems"></span>
         </div>
     </div>
 </template>
@@ -15,13 +16,22 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['selectedViewNameItem']),
+        ...mapActions(['selectedViewNameItem','setModalLessDialogInfo']),
         viewNameItemClick() {
             // if(this.viewNameItem.active) {
             //     return;
             // }
             //this.viewNameItem.active = true;
             this.selectedViewNameItem(this.viewNameItem);
+        },
+        showOptionItems(event) {
+            console.log(event);
+            this.setModalLessDialogInfo({
+                top: event.clientY + 'px',
+                left:event.clientX + 'px',
+                display: 'block',
+                isAllDataSet: this.viewNameItem.name == '全部数据'
+            });
         }
     }
 }
@@ -43,8 +53,28 @@ export default {
             font-size: 14px;
             font-weight: 400;
             cursor: pointer;
+            position: relative;
             &:hover{
                 color: #62836a;
+            }
+            .arrow-down{
+                display: none;
+                position: absolute;
+                background: #f99891;
+                width: 10px;
+                height: 10px;
+                top: 10px;
+                right: 10px;
+                border-radius: 50%;
+                cursor: pointer;
+                &:hover{
+                    background: #6d9276;
+                }
+            }
+        }
+        &.active{
+            .arrow-down{
+                display: block;
             }
         }
     }

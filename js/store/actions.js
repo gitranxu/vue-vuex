@@ -13,5 +13,8 @@ export default {
     },
     addViewNameItem({commit}, viewNameItem) {
         commit('addViewNameItem', viewNameItem);
+    },
+    setModalLessDialogInfo({commit}, modalLessDialogInfo) {
+        commit('setModalLessDialogInfo', modalLessDialogInfo);
     }
 }

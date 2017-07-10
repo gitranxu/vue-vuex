@@ -20,5 +20,8 @@ export default {
     addViewNameItem(state, viewNameItem) {
         state.tableNameItemList.filter(tableNameItem => tableNameItem.id == state.currentTableNameItem.id)[0]
             .viewNameItemList.push(viewNameItem);
+    },
+    setModalLessDialogInfo(state ,modalLessDialogInfo) {
+        state.modalLessDialogInfo = {...modalLessDialogInfo};
     }
 }

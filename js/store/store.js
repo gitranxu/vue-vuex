@@ -54,7 +54,12 @@ const state = {
         }
     ],
     modalOptionType: '',
-    currentTableNameItem: null
+    currentTableNameItem: null,
+    modalLessDialogInfo:{ //全局只有一个
+        top: 0,
+        left: 0,
+        display: 'none'
+    }
 };
 
 export default new Vuex.Store({
