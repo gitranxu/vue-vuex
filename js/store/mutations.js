@@ -10,6 +10,7 @@ export default {
             });
         });
         currentViewNameItem.active = true;
+        state.currentViewNameItem = currentViewNameItem;
     },
     setModalOptionType(state, modalOptionType) {
         state.modalOptionType = modalOptionType;

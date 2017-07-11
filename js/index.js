@@ -1,4 +1,5 @@
 import '../css/base.css';
+//import '../css/scrollbar.css';
 import Vue from 'vue';
 import Main from './components/main';
 import store from './store/store';

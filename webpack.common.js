@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
     entry: {
@@ -44,6 +45,10 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            _: 'underscore'
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             inject: 'body',
