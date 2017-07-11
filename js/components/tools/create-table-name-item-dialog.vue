@@ -1,5 +1,5 @@
 <template>
-    <div class="create-table-name-item-dialog" v-if="modalOptionType === 'createTableNameItem'">
+    <div class="create-table-name-item-dialog" v-if="isCreateTableNameItem">
         <modal-dialog>
             <div class="" slot="modal-header">
                 <h3>添加表格</h3>
@@ -17,6 +17,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import stateEnum from '../../lib/stateEnum';
 import modalDialog from './modal-dialog';
 import tool from '../../lib/tool';
 export default {
@@ -28,7 +29,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(['modalOptionType'])
+        ...mapState(['modalOptionType']),
+        isCreateTableNameItem() {
+            return this.modalOptionType == stateEnum.modalOptionType_createTableNameItem;
+        }
     },
     methods: {
         ...mapActions(['setModalOptionType','addTableNameItem']),

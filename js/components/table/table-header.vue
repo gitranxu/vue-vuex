@@ -1,17 +1,5 @@
 <template>
     <div class="table-header">
-        <!-- <div class="th">
-            123
-        </div>
-        <div class="th">
-            444
-        </div>
-        <div class="th">
-            555
-        </div>
-        <div class="th">
-            666
-        </div> -->
         <div class="th" v-for="item in tableInfo.displayFields" :style="getHeaderStyle(item)">
             {{item.fieldName}}
         </div>

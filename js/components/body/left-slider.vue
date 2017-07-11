@@ -11,7 +11,11 @@
 import addTableButton from './add-table-button';
 import tableNameItem from './table-name-item';
 import { mapState } from 'vuex';
+import scrollbar from 'jquery.scrollbar';
 export default {
+    mounted(el) {
+        $(this.$el).find('.table-name-item-list').scrollbar();
+    },
     computed: {
         ...mapState([
             'tableNameItemList'
@@ -32,7 +36,8 @@ export default {
         flex-direction: column;
         .table-name-item-list{
             height: 100%;
-            overflow-y: scroll;
+            margin-right: -1px; //这里其实是一个小亮点儿
+            overflow-y: auto;
             padding-bottom: 10px;
         }
     }

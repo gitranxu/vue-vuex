@@ -44,7 +44,7 @@ export default {
             background: #fff;
             color: #62836a;
             border-color: #d8dcd8;
-            margin-right: -1px;
+            //margin-right: -1px;
             border: 1px solid #d8dcd8;
             border-right:0;
         }
