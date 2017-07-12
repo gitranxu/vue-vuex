@@ -249,7 +249,8 @@ const state = {
     modalLessDialogInfo: { //全局只有一个
         top: 0,
         left: 0,
-        display: 'none'
+        display: 'none',
+        modalLessOptionType: '' //操作类型决定哪个可见哪个不可见
     },
     tdEditDialogInfo: { //全局只有一个
         top: 0,

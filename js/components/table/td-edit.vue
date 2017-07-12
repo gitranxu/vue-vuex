@@ -2,23 +2,25 @@
     <div class="td-edit" v-if="isExist" :style="tdEditDialogInfo" @dblclick="editDblClick">
         <td-text-edit :type="type" :val-obj="valObj" :dbl-done="dblDone"></td-text-edit>
         <td-number-edit :type="type" :val-obj="valObj" :dbl-done="dblDone"></td-number-edit>
-        <td-date-edit :type="type" :val-obj="valObj" :dbl-done="dblDone"></td-date-edit>
+        <td-date-edit :type="type" :val-obj="valObj" :dbl-done="dblDone" :td-height="tdHeight" :dbl-click-e="dblClickE"></td-date-edit>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 import tdTextEdit from './td-text-edit';
 import tdNumberEdit from './td-number-edit';
 import tdDateEdit from './td-date-edit';
 export default {
     data() {
         return {
-            dblDone: false //一开始为假
+            dblDone: false, //一开始为假
+            dblClickE: null
         }
     },
     computed: {
         ...mapState(['tdEditDialogInfo']),
+        ...mapGetters(['viewShowDataInfo']),
         isExist() {
             if(this.tdEditDialogInfo && this.tdEditDialogInfo.rowObj && this.tdEditDialogInfo.displayField) {
                 return true;
@@ -31,6 +33,10 @@ export default {
         },
         valObj() {
             return this.tdEditDialogInfo.rowObj[this.tdEditDialogInfo.displayField.columnName];
+        },
+        tdHeight() {
+            let selectedType = this.viewShowDataInfo.type[this.viewShowDataInfo.selectedType];
+            return selectedType.tdHeight;
         }
     },
     watch: {
@@ -43,8 +49,9 @@ export default {
     },
     methods: {
         ...mapActions(['setTdEditDialogInfo']),
-        editDblClick() {
+        editDblClick(event) {
             this.dblDone = true;
+            this.dblClickE = event;
         }
     },
     components: {

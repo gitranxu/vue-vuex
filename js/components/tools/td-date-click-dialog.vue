@@ -1,28 +1,34 @@
 <template>
-    <div class="view-name-item-click-dialog" v-if="isExist">
+    <div class="td-date-click-dialog" v-if="isExist">
         <modal-less-dialog>
-            <div class="items">
-                <span v-if="!modalLessDialogInfo.isAllDataSet" class="item">重命名</span>
-                <span class="item">复制</span>
-                <span v-if="!modalLessDialogInfo.isAllDataSet" class="item">删除</span>
-            </div>
+            <calendar :now-date="now" :result-obj="output"></calendar>
         </modal-less-dialog>
     </div>
 </template>
 
 <script>
 import modalLessDialog from './modal-less-dialog';
+import calendar from '../../lib/calendar';
 import stateEnum from '../../lib/stateEnum';
 import { mapState } from 'vuex';
 export default {
+    data() {
+        return {
+            now: '2017-7-12 11:21',
+            output: {
+                a: ''
+            }
+        }
+    },
     computed: {
-        ...mapState(['modalLessDialogInfo','modalLessOptionType']),
+        ...mapState(['modalLessDialogInfo']),
         isExist() {
-            return this.modalLessDialogInfo.modalLessOptionType == stateEnum.modalLessOptionType_viewNameItemClick;
+            return this.modalLessDialogInfo.modalLessOptionType == stateEnum.modalLessOptionType_tdDateClick;
         }
     },
     components: {
-        modalLessDialog
+        modalLessDialog,
+        calendar
     }
 }
 </script>

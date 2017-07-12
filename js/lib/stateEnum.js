@@ -3,5 +3,7 @@ export default {
     modalOptionType_createViewNameItem : "createViewNameItem",
     tdText: "text",
     tdNumber: "number",
-    tdDate: "date"
+    tdDate: "date",
+    modalLessOptionType_viewNameItemClick: "viewNameItemClick",
+    modalLessOptionType_tdDateClick: "tdDateClick"
 }

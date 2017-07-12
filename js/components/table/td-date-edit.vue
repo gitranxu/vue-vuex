@@ -1,11 +1,9 @@
 <template>
-    <div class="td-date-edit" v-if="isExist">
-        <!-- <textarea name="name" rows="8" cols="80" @blur="blur" v-model="tdValue"></textarea> -->
-        <input type="text" name="" value="444">
-    </div>
+    <div class="td-date-edit" v-if="isExist"></div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import stateEnum from '../../lib/stateEnum';
 export default {
     data() {
@@ -22,6 +20,12 @@ export default {
         },
         dblDone: {
             type: Boolean
+        },
+        tdHeight: {
+            type: Number
+        },
+        dblClickE: {
+
         }
     },
     mounted() {
@@ -42,11 +46,33 @@ export default {
                 this.tdValue = val.value;
             },
             deep: true
+        },
+        'dblDone': {
+            handler(val, oldVal) {
+                if(val) {
+                    console.log('这时应该显示日历....');
+                    this.showCalendar();
+                }
+
+            }
         }
     },
     methods: {
+        ...mapActions(['setModalLessDialogInfo']),
         blur() {
             this.valObj.value = this.tdValue;
+        },
+        showCalendar() {
+            let event = this.dblClickE;
+            let top = event.pageY - event.offsetY - 3;
+            let left = event.pageX - event.offsetX - 1;
+            this.setModalLessDialogInfo({
+                display:'block',
+                modalLessOptionType: stateEnum.modalLessOptionType_tdDateClick,
+                top: (top + this.tdHeight) + 'px',
+                left: left + 'px'
+            });
+
         }
     }
 }

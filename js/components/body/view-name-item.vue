@@ -9,6 +9,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import stateEnum from '../../lib/stateEnum';
 export default {
     props: {
         viewNameItem: {
@@ -29,6 +30,7 @@ export default {
             this.setModalLessDialogInfo({
                 top: event.clientY + 'px',
                 left:event.clientX + 'px',
+                modalLessOptionType: stateEnum.modalLessOptionType_viewNameItemClick,
                 display: 'block',
                 isAllDataSet: this.viewNameItem.name == '全部数据'
             });
