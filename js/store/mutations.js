@@ -15,9 +15,6 @@ export default {
     setModalOptionType(state, modalOptionType) {
         state.modalOptionType = modalOptionType;
     },
-    // setModalLessOptionType(state, modalLessOptionType) {
-    //     state.modalLessOptionType = modalLessOptionType;
-    // },
     setCurrentTableNameItem(state, tableNameItem) {
         state.currentTableNameItem = tableNameItem;
     },

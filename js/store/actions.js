@@ -8,9 +8,6 @@ export default {
     setModalOptionType({commit}, modalOptionType) {
         commit('setModalOptionType', modalOptionType);
     },
-    // setModalLessOptionType({commit}, modalLessOptionType) {
-    //     commit('setModalLessOptionType', modalLessOptionType);
-    // },
     setCurrentTableNameItem({commit}, tableNameItem) {
         commit('setCurrentTableNameItem', tableNameItem);
     },
@@ -26,9 +23,9 @@ export default {
     hideTdEditDialogInfo({commit}, event) {
         //这里做一个总体判断,如果为XX种情况,则隐藏
         if($(event.target).hasClass('td-edit-click-zone') || $(event.target).parents('.td-edit').length || $(event.target).hasClass('td-edit')) {
-            //console.log('不应该隐藏');
+            console.log('不应该隐藏');
         }else {
-            //console.log('隐藏');
+            console.log('隐藏');
             commit('setTdEditDialogInfo', {display: 'none'});
         }
 

@@ -1,14 +1,22 @@
 <template>
-    <div class="td-date-edit" v-if="isExist"></div>
+    <div class="td-date-edit" v-if="isExist">
+        <modal-less-dialog>
+            <calendar :now-date="now" :result-obj="output"></calendar>
+        </modal-less-dialog>
+    </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import stateEnum from '../../lib/stateEnum';
+import modalLessDialog from '../tools/modal-less-dialog';
+import calendar from '../../lib/calendar';
 export default {
     data() {
         return {
-            tdValue: ''
+            tdValue: '',
+            now: "20170712 12:12:12",
+            output: {}
         }
     },
     props: {
@@ -74,6 +82,10 @@ export default {
             });
 
         }
+    },
+    components: {
+        modalLessDialog,
+        calendar
     }
 }
 </script>

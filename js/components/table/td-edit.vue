@@ -1,8 +1,8 @@
 <template>
     <div class="td-edit" v-if="isExist" :style="tdEditDialogInfo" @dblclick="editDblClick">
-        <td-text-edit :type="type" :val-obj="valObj" :dbl-done="dblDone"></td-text-edit>
-        <td-number-edit :type="type" :val-obj="valObj" :dbl-done="dblDone"></td-number-edit>
-        <td-date-edit :type="type" :val-obj="valObj" :dbl-done="dblDone" :td-height="tdHeight" :dbl-click-e="dblClickE"></td-date-edit>
+        <td-text-edit :type="type" :val-obj="valObj" :dbl-done="tdEditDialogInfo.dblClick"></td-text-edit>
+        <td-number-edit :type="type" :val-obj="valObj" :dbl-done="tdEditDialogInfo.dblClick"></td-number-edit>
+        <td-date-edit :type="type" :val-obj="valObj" :dbl-done="tdEditDialogInfo.dblClick" :td-height="tdHeight" :dbl-click-e="dblClickE"></td-date-edit>
     </div>
 </template>
 
@@ -14,7 +14,7 @@ import tdDateEdit from './td-date-edit';
 export default {
     data() {
         return {
-            dblDone: false, //一开始为假
+            //dblDone: false, //一开始为假
             dblClickE: null
         }
     },
@@ -42,7 +42,7 @@ export default {
     watch: {
         'tdEditDialogInfo': {
             handler() {
-                this.dblDone = false; //当用户点击不同的td时,重新置为false
+                this.tdEditDialogInfo.dblClick = false; //当用户点击不同的td时,重新置为false
             },
             deep: true
         }
@@ -50,7 +50,7 @@ export default {
     methods: {
         ...mapActions(['setTdEditDialogInfo']),
         editDblClick(event) {
-            this.dblDone = true;
+            this.tdEditDialogInfo.dblClick = true;
             this.dblClickE = event;
         }
     },

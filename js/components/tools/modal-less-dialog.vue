@@ -11,12 +11,17 @@ import { mapState, mapActions } from 'vuex';
 export default {
     methods: {
         ...mapActions(['setModalLessDialogInfo']),
-        hidden() {
-            this.setModalLessDialogInfo({display:'none'})
+        hidden(event) {
+            if($(event.target).parents('.content').length) {
+                return;
+            }
+            console.log(77777);
+            this.tdEditDialogInfo.dblClick = false;
+            this.setModalLessDialogInfo({display:'none'});
         }
     },
     computed: {
-        ...mapState(['modalLessDialogInfo'])
+        ...mapState(['modalLessDialogInfo','tdEditDialogInfo'])
     }
 }
 </script>

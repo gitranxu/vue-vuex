@@ -6,7 +6,6 @@
         </div>
         <div class="modal-less-dialogs">
             <view-name-item-click-dialog></view-name-item-click-dialog>
-            <td-date-click-dialog></td-date-click-dialog>
         </div>
         <td-edit></td-edit>
     </div>
@@ -16,7 +15,6 @@
 import createTableNameItemDialog from './create-table-name-item-dialog';
 import createViewNameItemDialog from './create-view-name-item-dialog';
 import viewNameItemClickDialog from './view-name-item-click-dialog';
-import tdDateClickDialog from './td-date-click-dialog';
 import tdEdit from '../table/td-edit';
 
 export default {
@@ -24,8 +22,7 @@ export default {
         createTableNameItemDialog,
         createViewNameItemDialog,
         viewNameItemClickDialog,
-        tdEdit,
-        tdDateClickDialog
+        tdEdit
     }
 }
 </script>
