@@ -26,7 +26,7 @@ export default {
             console.log('不应该隐藏');
         }else {
             console.log('隐藏');
-            commit('setTdEditDialogInfo', {display: 'none', dblClick: false});
+            commit('setTdEditDialogInfo', {display: 'none'});
         }
 
     }

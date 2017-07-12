@@ -26,8 +26,8 @@ export default {
             if(!$(event.target).hasClass('td-edit-click-zone')) {
                 return;
             }
-            let top = event.clientY - event.offsetY;
-            let left = event.clientX - event.offsetX - 10;
+            let top = event.pageY - event.offsetY;
+            let left = event.pageX - event.offsetX - 10;
             let selectedType = this.tableInfo.type[this.tableInfo.selectedType];
             let tdHeight = selectedType.tdHeight;
             let display = 'block';

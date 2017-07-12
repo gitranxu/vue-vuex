@@ -1,6 +1,7 @@
 <template>
-    <div class="td-text-edit" v-if="isExist">
-        <textarea name="name" rows="8" cols="80" @blur="blur" v-model="tdValue"></textarea>
+    <div class="td-date-edit" v-if="isExist">
+        <!-- <textarea name="name" rows="8" cols="80" @blur="blur" v-model="tdValue"></textarea> -->
+        <input type="text" name="" value="444">
     </div>
 </template>
 
@@ -29,7 +30,7 @@ export default {
     },
     computed: {
         isExist() {
-            if(this.dblDone && this.type == stateEnum.tdText) {
+            if(this.dblDone && this.type == stateEnum.tdDate) {
                 return true;
             }
             return false;

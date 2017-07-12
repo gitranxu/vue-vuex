@@ -1,5 +1,5 @@
 <template>
-    <div class="td-text-edit" v-if="isExist">
+    <div class="td-number-edit" v-if="isExist">
         <textarea name="name" rows="8" cols="80" @blur="blur" v-model="tdValue"></textarea>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
     },
     computed: {
         isExist() {
-            if(this.dblDone && this.type == stateEnum.tdText) {
+            if(this.dblDone && this.type == stateEnum.tdNumber) {
                 return true;
             }
             return false;
