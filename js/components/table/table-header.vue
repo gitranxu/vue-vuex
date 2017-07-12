@@ -20,6 +20,7 @@ export default {
         getHeaderStyle(currentDisplayField) {
             let left = 0;
             let displayFields = this.tableInfo.displayFields;
+            let thHeight = this.tableInfo.type[this.tableInfo.selectedType].thHeight;
             for(let i = 0, j = displayFields.length; i < j; i++) {
                 if(displayFields[i].fieldId == currentDisplayField.fieldId) {
                     break;
@@ -28,7 +29,10 @@ export default {
             }
             return {
                 width: currentDisplayField.width + 'px',
-                height: this.tableInfo.type[this.tableInfo.selectedType].thHeight + 'px',
+                height: thHeight + 'px',
+                lineHeight: thHeight + 'px',
+                textAlign: currentDisplayField.textAlign || 'center',
+                padding: currentDisplayField.padding || '0 10px',
                 top: 0,
                 left: left + 'px'
             };

@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div class="main" @click="mainClick">
        <main-header>
            <scene-list></scene-list>
            <nav-brand></nav-brand>
@@ -29,30 +29,18 @@ import contentZone from './body/content-zone';
 import tools from './tools/tools';
 import modalDialogs from './tools/modal-dialogs';
 
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 // import { STATUS } from '../vuex/store/statusEnum';
 
 export default {
-    // data() {
-    //     return {
-    //         createTableNameItemInfo: {
-    //             name: '',
-    //             viewNameItemList: [
-    //                 {
-    //                     name: '全部数据',
-    //                     active: false
-    //                 }
-    //             ]
-    //         }
-    //     }
-    // },
-    // created() {
-    //     this.updateStatus(STATUS.READY);
-    //     this.reset();
-    // },
-    //
     computed: {
         ...mapState(['modalOptionType'])
+    },
+    methods: {
+        ...mapActions(['hideTdEditDialogInfo']),
+        mainClick(event) {
+            this.hideTdEditDialogInfo(event);
+        }
     },
     components: {
         mainHeader,

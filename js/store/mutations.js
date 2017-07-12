@@ -24,5 +24,8 @@ export default {
     },
     setModalLessDialogInfo(state ,modalLessDialogInfo) {
         state.modalLessDialogInfo = {...modalLessDialogInfo};
+    },
+    setTdEditDialogInfo(state ,tdEditDialogInfo) {
+        state.tdEditDialogInfo = {...tdEditDialogInfo};
     }
 }

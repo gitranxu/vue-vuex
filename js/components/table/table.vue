@@ -2,7 +2,7 @@
     <div class="my-table">
         <!-- <table-buttons></table-buttons> -->
         <table-header :table-info="tableInfo"></table-header>
-        <!-- <table-body></table-body> -->
+        <table-body :table-info="tableInfo"></table-body>
     </div>
 </template>
 
@@ -10,7 +10,9 @@
 //import { mapState } from 'vuex';
 // $ from 'jquery';
 //import scrollbar from 'jquery.scrollbar';
-import tableHeader from './table-header'
+import tableHeader from './table-header';
+import tableBody from './table-body';
+
 export default {
     mounted(el) {
         //$(this.$el).find('.scrollbar-inner').scrollbar();
@@ -24,7 +26,8 @@ export default {
         }
     },
     components: {
-        tableHeader
+        tableHeader,
+        tableBody
     }
 }
 </script>

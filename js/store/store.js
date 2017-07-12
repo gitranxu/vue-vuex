@@ -79,7 +79,8 @@ const state = {
                     orderType: 1,
                     isGroup: 1,
                     width: 100,
-                    type: 'text'
+                    type: 'text',
+                    textAlign: 'left'
                 },
                 {
                     fieldName: '客户名称',
@@ -88,7 +89,8 @@ const state = {
                     orderType: 1,
                     isGroup: 0,
                     width: 200,
-                    type: 'number'
+                    type: 'number',
+                    textAlign: 'right'
                 },
                 {
                     fieldName: '完成时间',
@@ -102,24 +104,48 @@ const state = {
             ],
             dataSet: [
                 {
-                    shangji: '商机1',
-                    username: 'sho3',
-                    finishtime: '2015-7-10 4:34'
+                    shangji: {
+                        value: '商机1'
+                    },
+                    username: {
+                        value: 'sho1'
+                    },
+                    finishtime: {
+                        value: '2015-7-10 4:34'
+                    }
                 },
                 {
-                    shangji: '商机2',
-                    username: 'ssd3',
-                    finishtime: '2015-5-4 14:24'
+                    shangji: {
+                        value: '商机2'
+                    },
+                    username: {
+                        value: 'sho2'
+                    },
+                    finishtime: {
+                        value: '2015-5-4 14:24'
+                    }
                 },
                 {
-                    shangji: '商机1',
-                    username: 'sho3',
-                    finishtime: '2015-7-10 4:34'
+                    shangji: {
+                        value: '商机3'
+                    },
+                    username: {
+                        value: 'sho3'
+                    },
+                    finishtime: {
+                        value: '2015-5-4 14:24'
+                    }
                 },
                 {
-                    shangji: '商机2',
-                    username: 'ssd3',
-                    finishtime: '2015-5-4 14:24'
+                    shangji: {
+                        value: '商机4'
+                    },
+                    username: {
+                        value: 'sho4'
+                    },
+                    finishtime: {
+                        value: '2015-5-4 14:24'
+                    }
                 }
             ]
         },
@@ -171,24 +197,48 @@ const state = {
             ],
             dataSet: [
                 {
-                    shangji: '商机1',
-                    username: 'sho3',
-                    finishtime: '2017-7-10 4:34'
+                    shangji: {
+                        value: '商机x'
+                    },
+                    username: {
+                        value: 'sho1a'
+                    },
+                    finishtime: {
+                        value: '2017-7-10 4:34'
+                    }
                 },
                 {
-                    shangji: '商机2',
-                    username: 'ssd3',
-                    finishtime: '2016-5-4 14:24'
+                    shangji: {
+                        value: '商机y'
+                    },
+                    username: {
+                        value: 'sho2b'
+                    },
+                    finishtime: {
+                        value: '2017-5-4 14:24'
+                    }
                 },
                 {
-                    shangji: '商机1',
-                    username: 'sho3',
-                    finishtime: '2017-7-10 4:34'
+                    shangji: {
+                        value: '商机z'
+                    },
+                    username: {
+                        value: 'shxdfo3'
+                    },
+                    finishtime: {
+                        value: '2017-5-4 14:24'
+                    }
                 },
                 {
-                    shangji: '商机2',
-                    username: 'ssd3',
-                    finishtime: '2016-5-4 14:24'
+                    shangji: {
+                        value: '商机b'
+                    },
+                    username: {
+                        value: 'fdsho4a'
+                    },
+                    finishtime: {
+                        value: '2017-5-4 14:24'
+                    }
                 }
             ]
         }
@@ -196,10 +246,16 @@ const state = {
     modalOptionType: '',
     currentTableNameItem: null,
     currentViewNameItem: null, //当前用户点击的视图
-    modalLessDialogInfo:{ //全局只有一个
+    modalLessDialogInfo: { //全局只有一个
         top: 0,
         left: 0,
         display: 'none'
+    },
+    tdEditDialogInfo: { //全局只有一个
+        top: 0,
+        left: 0,
+        display: 'none',
+        dblClick: false
     }
 };
 
