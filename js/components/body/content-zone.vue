@@ -1,8 +1,7 @@
 <template>
     <div class="content-zone">
         <my-table :table-info="viewShowDataInfo"></my-table>
-
-        <calendar :now-date="now" :result-obj="output"></calendar>
+        <calendar @getDate="calendarGetDate"></calendar>
     </div>
 </template>
 
@@ -13,10 +12,12 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            now: '2017-7-12 11:21',
-            output: {
-                a: ''
-            }
+            now: ''
+        }
+    },
+    methods: {
+        calendarGetDate(aaa) {
+            console.log(aaa);
         }
     },
     computed: {
