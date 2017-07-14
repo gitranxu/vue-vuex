@@ -1,7 +1,10 @@
 <template>
     <div class="content-zone">
         <my-table :table-info="viewShowDataInfo"></my-table>
-        <calendar @getDate="calendarGetDate"></calendar>
+        <calendar @getDate="calendarGetDate" @isShowChange="isShowChange" :is-show="test"></calendar>
+        <div class="" @click="showCalendar">
+            显示日历{{date}}
+        </div>
     </div>
 </template>
 
@@ -12,12 +15,20 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            now: ''
+            now: '',
+            test: false,
+            date:''
         }
     },
     methods: {
         calendarGetDate(aaa) {
-            console.log(aaa);
+            this.date = aaa;
+        },
+        showCalendar() {
+            this.test = true;
+        },
+        isShowChange(val) {
+            this.test = val;
         }
     },
     computed: {

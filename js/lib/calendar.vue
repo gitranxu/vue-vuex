@@ -1,5 +1,5 @@
 <template>
-    <div class="my-calendar">
+    <div class="my-calendar" v-if="showCalendar" ref="calendar">
         <div class="header">
             <div class="months">
                 <div class="title">
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(row, rowIndex) in dateToShow">
-                        <td v-for="(col,colIndex) in row" :class="{currentMonth: col.currentMonth, currentDay: col.currentDay, active: getTdActive(col)}" @click="changeDay(col.value)">
+                        <td v-for="(col,colIndex) in row" :class="{currentMonth: col.currentMonth, currentDay: col.currentDay, active: getTdActive(col)}" @click="changeDay(col)">
                             {{col.value}}
                         </td>
                     </tr>
@@ -39,9 +39,19 @@
             </table>
         </div>
         <div class="footer">
-            <div class="" @click="change">
-                确认{{this.selectedDay}}
+            <div class="buttons">
+                <div class="button" @click="getNow">
+                    现在
+                </div>
+                <div class="button" @click="ok">
+                    确定
+                </div>
             </div>
+            <div class="time">
+                11:45{{this.showCalendar}}
+            </div>
+            <!-- <div class="" @click="change">
+            </div> -->
         </div>
     </div>
 </template>
@@ -56,15 +66,23 @@ export default {
             isYearSelectShow: 'none',
             selectedMonth: 0, //选中的月
             selectedYear: 0,
-            selectedDay: 0,
-            now: new Date()
+            selectedDay: {},
+            now: new Date(),
+            showCalendar: this.isShow, //是否显示日历组件
+            output: {}
         }
     },
     created() {
         this.selectedMonth = this.month;
         this.selectedYear = this.year;
         this.selectedDay = this.day;
+        this.result();
         this.dateToShow = this.the67ArrayDay;
+    },
+    watch: {
+        'isShow'(val) {
+            this.showCalendar = val;
+        }
     },
     props: {
         nowDate: {
@@ -72,6 +90,12 @@ export default {
             type: String,
             default() {
                 return '2017-07-02 11:12'
+            }
+        },
+        isShow: {
+            type: Boolean,
+            default() {
+                return false;
             }
         },
         resultObj: {
@@ -115,7 +139,9 @@ export default {
             return new Date(this.selectedYear, this.selectedMonth, 1).getDay();
         },
         day() {
-            return this.theDate.substring(8,10) - 0;
+            return {
+                value: this.theDate.substring(8,10) - 0
+            };
         },
         hour() {
             return this.theDate.substring(11,13) - 0;
@@ -125,9 +151,9 @@ export default {
         },
         the42Day() {
             //得到当前第一个月之前的空白,由上一个月来填补,加上当前月天数后,再由1到大补齐42天
-            let lastMonthDays = this.getNumberArr((this.getLastMouthDays() - this.getDayIndex() + 1),this.getLastMouthDays());
+            let lastMonthDays = this.getNumberArr((this.getLastMouthDays() - this.getDayIndex() + 1),this.getLastMouthDays(), {lastMonth: true});
             let theDays = this.getNumberArr(1, this.mDays[this.selectedMonth], {currentMonth: true});
-            let nextMonthDays = this.getNumberArr(1, 42 - this.mDays[this.selectedMonth] - this.getDayIndex());
+            let nextMonthDays = this.getNumberArr(1, 42 - this.mDays[this.selectedMonth] - this.getDayIndex(), {nextMonth: true});
             return lastMonthDays.concat(theDays).concat(nextMonthDays);
         },
         the67ArrayDay() {
@@ -150,6 +176,55 @@ export default {
         }
     },
     methods: {
+        hidden() {
+            this.showCalendar = false;
+            this.$emit('isShowChange', this.showCalendar);
+        },
+        show() {
+            this.showCalendar = true;
+        },
+        getNow() {
+            let now = new Date();
+            this.selectedYear = now.getFullYear();
+            this.selectedMonth = now.getMonth();
+            this.selectedDay = {
+                value: now.getDate()
+            };
+            this.result();
+            this.refresh();
+            this.hidden();
+            this.$emit('getDate',this.output);
+        },
+        ok() {
+            //this.theDate = '2088-01-02 11:12';
+            this.result();
+            this.refresh();
+            this.hidden();
+            this.$emit('getDate',this.output);
+        },
+        result() {
+            //当用户点击确认按钮时,再去计算最终的返回结果,当用户点击具体的日期时会改变该值,该值也会对currentDay进行影响
+
+            let result = {
+                year: this.selectedYear,
+                month: this.selectedMonth,
+                day: this.selectedDay.value
+            };
+            if(this.selectedDay.lastMonth) { //如果是上个月某天
+                result.month = this.selectedMonth - 1;
+                if(result.month < 0) {
+                    result.month += 12;
+                    result.year -= 1;
+                }
+            }else if(this.selectedDay.nextMonth) {
+                result.month = this.selectedMonth + 1;
+                if(result.month >= 12) {
+                    result.month -= 12;
+                    result.year += 1;
+                }
+            }
+            this.output = result;
+        },
         refresh() {
             this.isMonthSelectShow = 'none';
             this.isYearSelectShow = 'none';
@@ -171,25 +246,51 @@ export default {
         },
         changeDay(day) {
             this.selectedDay = day;
+            this.result();
             this.refresh();
         },
         getNumberArr(begin, end, opt) {
             //如果是当前月,如果是当前日,则给一个active
             let result = [];
+            let resultDateObj = this.output;
+            let month,year;
             for(let i = begin; i <= end; i++) {
-                if(opt && opt.currentMonth) {
-                    if(i == this.selectedDay) {
-                        //初始值或用户选择值
-                        console.log('这里再想想怎样弄...');
+                if(opt.lastMonth) {//如果是上个月
+                    month = this.selectedMonth - 1;
+                    year = this.selectedYear;
+                    if(month < 0) {
+                        month += 12;
+                        year -= 1;
+                    }
+                    if(i == resultDateObj.day && month == resultDateObj.month && year == resultDateObj.year) {
+                        result.push({value: i, ...opt, ...{selectedDay: true}});
+                    }else {
+                        result.push({value: i, ...opt});
+                    }
+                }else if(opt.nextMonth) { //如果是下个月
+                    month = this.selectedMonth + 1;
+                    year = this.selectedYear;
+                    if(month >= 12) {
+                        month -= 12;
+                        year += 1;
+                    }
+                    if(i == resultDateObj.day && month == resultDateObj.month && year == resultDateObj.year) {
+                        result.push({value: i, ...opt, ...{selectedDay: true}});
+                    }else {
+                        result.push({value: i, ...opt});
+                    }
+                }else {  //如果是当月
+                    month = this.selectedMonth;
+                    year = this.selectedYear;
+                    if(i == resultDateObj.day && month == resultDateObj.month && year == resultDateObj.year) {
                         result.push({value: i, ...opt, ...{selectedDay: true}});
                     }else if(this.now.getDate() == i && this.selectedMonth == this.month && this.selectedYear == this.year) {
                         //当前日
                         result.push({value: i, ...opt, ...{currentDay: true}});
-                    }else{
+                    }else {
                         result.push({value: i, ...opt});
                     }
-                }else{
-                    result.push({value: i, ...opt});
+
                 }
             }
             return result;
@@ -220,10 +321,6 @@ export default {
                 return item.value == firstDay;
             });
         },
-        change() {
-            this.theDate = '2088-01-02 11:12';
-            this.$emit('getDate',{a:23,b:77});
-        },
         isLeap(){
             let year = this.year;
             return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
@@ -234,7 +331,6 @@ export default {
 
 <style lang="less" scoped>
     .my-calendar{
-        color: orange;
         margin-left: 10px;
         margin-top: 10px;
         user-select: none;
@@ -378,6 +474,30 @@ export default {
             }
 
 
+        }
+        .footer{
+            height: 31px;
+            border-top: 1px solid #dee5ec;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            .time{
+                margin: 0 16px;
+            }
+            .buttons{
+                margin: 0 12px;
+                display: flex;
+                .button{
+                    padding: 5px 7px;
+                    color: #8aa891;
+                    cursor: pointer;
+                    &:hover{
+                        color: #62846a;
+                    }
+                }
+            }
         }
     }
 </style>
