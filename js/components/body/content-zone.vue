@@ -1,14 +1,19 @@
 <template>
     <div class="content-zone">
-        <my-table :table-info="viewShowDataInfo"></my-table>
-        <calendar @getDate="calendarGetDate" @isShowChange="isShowChange" :is-show="test"></calendar>
+        <!-- <div class="test">
+            <my-table :table-info="viewShowDataInfo"></my-table>
+        </div> -->
+
+        <!-- <calendar @getDate="calendarGetDate" :is-show="isCalendar" :has-time="true"></calendar>
         <div class="" @click="showCalendar">
             显示日历{{date}}
-        </div>
+        </div> -->
+        <my-new-table></my-new-table>
     </div>
 </template>
 
 <script>
+import myNewTable from '../new-table/table';
 import myTable from '../table/table';
 import calendar from '../../lib/calendar';
 import { mapGetters } from 'vuex';
@@ -16,19 +21,19 @@ export default {
     data() {
         return {
             now: '',
-            test: false,
+            isCalendar: false,
             date:''
         }
     },
     methods: {
         calendarGetDate(aaa) {
+            this.isCalendar = false;//隐藏日历
             this.date = aaa;
         },
         showCalendar() {
+            this.isCalendar = true; //显示日历
+            this.abc = !this.abc;
             this.test = true;
-        },
-        isShowChange(val) {
-            this.test = val;
         }
     },
     computed: {
@@ -36,14 +41,23 @@ export default {
     },
     components: {
         myTable,
-        calendar
+        calendar,
+        myNewTable
     }
 }
 </script>
 
 <style lang="less">
     .content-zone{
-        width: 100%;
         height: 100%;
+        position: relative;
+        flex: 1;
+        .test{
+            width: 400px;
+            height: 300px;
+            position: relative;
+            background: orange;
+        }
     }
+
 </style>

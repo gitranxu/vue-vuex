@@ -1,5 +1,5 @@
 <template>
-    <div class="my-calendar" v-if="showCalendar" ref="calendar">
+    <div class="my-calendar" v-if="isShow">
         <div class="header">
             <div class="months">
                 <div class="title">
@@ -47,11 +47,11 @@
                     确定
                 </div>
             </div>
-            <div class="time">
-                11:45{{this.showCalendar}}
+            <div class="time" v-if="hasTime">
+                <input type="text" v-model="selectedHour">
+                <span>:</span>
+                <input type="text" v-model="selectedMinute">
             </div>
-            <!-- <div class="" @click="change">
-            </div> -->
         </div>
     </div>
 </template>
@@ -67,8 +67,9 @@ export default {
             selectedMonth: 0, //选中的月
             selectedYear: 0,
             selectedDay: {},
+            selectedHour: 0,
+            selectedMinute: 0,
             now: new Date(),
-            showCalendar: this.isShow, //是否显示日历组件
             output: {}
         }
     },
@@ -76,13 +77,10 @@ export default {
         this.selectedMonth = this.month;
         this.selectedYear = this.year;
         this.selectedDay = this.day;
+        this.selectedHour = this.hour;
+        this.selectedMinute = this.minute;
         this.result();
         this.dateToShow = this.the67ArrayDay;
-    },
-    watch: {
-        'isShow'(val) {
-            this.showCalendar = val;
-        }
     },
     props: {
         nowDate: {
@@ -100,6 +98,9 @@ export default {
         },
         resultObj: {
             type: Object
+        },
+        hasTime: {
+            type: Boolean
         },
         beginWeek: {
             //渲染日历时,第一列是周几,周日为0或7
@@ -176,13 +177,6 @@ export default {
         }
     },
     methods: {
-        hidden() {
-            this.showCalendar = false;
-            this.$emit('isShowChange', this.showCalendar);
-        },
-        show() {
-            this.showCalendar = true;
-        },
         getNow() {
             let now = new Date();
             this.selectedYear = now.getFullYear();
@@ -190,16 +184,16 @@ export default {
             this.selectedDay = {
                 value: now.getDate()
             };
+            this.selectedHour = now.getHours();
+            this.selectedMinute = now.getMinutes();
             this.result();
             this.refresh();
-            this.hidden();
             this.$emit('getDate',this.output);
         },
         ok() {
             //this.theDate = '2088-01-02 11:12';
             this.result();
             this.refresh();
-            this.hidden();
             this.$emit('getDate',this.output);
         },
         result() {
@@ -208,7 +202,9 @@ export default {
             let result = {
                 year: this.selectedYear,
                 month: this.selectedMonth,
-                day: this.selectedDay.value
+                day: this.selectedDay.value,
+                hour: this.selectedHour,
+                minute: this.selectedMinute
             };
             if(this.selectedDay.lastMonth) { //如果是上个月某天
                 result.month = this.selectedMonth - 1;
@@ -485,6 +481,13 @@ export default {
             font-size: 14px;
             .time{
                 margin: 0 16px;
+                display: flex;
+                flex-direction: row;
+                input{
+                    border: none;
+                    width: 20px;
+                    text-align: center;
+                }
             }
             .buttons{
                 margin: 0 12px;

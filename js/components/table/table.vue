@@ -9,13 +9,14 @@
 <script>
 //import { mapState } from 'vuex';
 // $ from 'jquery';
-//import scrollbar from 'jquery.scrollbar';
+import scrollbar from 'jquery.scrollbar';
 import tableHeader from './table-header';
 import tableBody from './table-body';
 
 export default {
     mounted(el) {
-        //$(this.$el).find('.scrollbar-inner').scrollbar();
+        console.log($(this.$el).length);
+        $(this.$el).scrollbar();
     },
     props: {
         tableInfo: {
@@ -36,5 +37,15 @@ export default {
 //使用时,使用scrollbar方法的DOM要定义最大高度,它的父级DOM要定义最大宽度.
     .my-table{
         position: relative;
+        height: 100%;
+        width: 100%;
+        .table-header{
+            height: 100px;
+            background: skyblue;
+        }
+        .table-body{
+            height: 700px;
+            background: green;
+        }
     }
 </style>
