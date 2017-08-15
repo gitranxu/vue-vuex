@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import myNewTable from '../new-table/table';
+import myNewTable from '../new-table/table2';
 import myTable from '../table/table';
 import calendar from '../../lib/calendar';
 import { mapGetters } from 'vuex';
