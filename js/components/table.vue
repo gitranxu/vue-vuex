@@ -22,18 +22,10 @@ import record from './record.vue';
 import tool from '../lib/tool.js';
 import groupTable from '../lib/groupTable.js';
 export default {
-    data() {
-        return {
-            initRightLeft : 0 //.right的初始left值
-        }
-    },
     mounted(el) {
         let _this = this;
         let init_left = $('.table').position().left;
         let init_top = $('.table').position().top;
-
-        this.initRightLeft = $('.right').position().left;
-        console.log(this.initRightLeft);
         let init_body_top = $('.body').position().top;
 
         $(this.$el).scrollbar({
@@ -43,7 +35,7 @@ export default {
                     top: init_top + y.scroll
                 });
 
-                let left = _this.initRightLeft - x.scroll;
+                let left = _this.tableDefaultProps.initRightLeft - x.scroll;
                 $('.right').css({
                     left: left
                 });
@@ -59,11 +51,6 @@ export default {
             }
         });
         $('.rx-table .scroll-y').css("top", this.tableDefaultProps.thHeight);
-    },
-    updated() {
-        //console.log(111);
-        //console.log($('.right').position().left);
-        this.initRightLeft = $('.right').position().left;
     },
     props: {
         tableInfo: {
@@ -105,7 +92,6 @@ export default {
             }
         },
         bindingOpt() {
-            //console.log(777777);
             return {
                 tableDefaultProps: this.tableDefaultProps,
                 getDisplayFields: this.getDisplayFields,
@@ -203,6 +189,16 @@ export default {
             &.group0 {
                 .detail-td, .empty-group-td{
                     background: #fffbd1;
+                }
+            }
+            .td-fixed{
+                .groupTd.mouseenter{
+                    background: #f7f7f7;
+                }
+                &.hover{
+                    .detail-td, .empty-group-td{
+                        background: #f7f7f7;
+                    }
                 }
             }
             .freezed {

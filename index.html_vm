@@ -12,10 +12,10 @@
     <style>
         .demo{
             width: 800px;
-            height: 300px;
+            height: 400px;
             position: absolute;
             top: 200px;
-            left: 40%;
+            left: 20%;
         }
     </style>
 </head>
@@ -25,10 +25,7 @@
         window.onload = function() {
             var s = new VueTable({
                 el: '#application',
-                isEdit: 2,
-                thdialog: {
-                    datafilter: true
-                }
+                isEdit: 2
             });
             s.queryTable();
             s.setTableDefaultProps({

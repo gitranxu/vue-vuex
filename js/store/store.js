@@ -19,6 +19,7 @@ const state = {
         thWidth: 200,
         tableWidth: 0,
         tableHeight: 0,
+        initRightLeft: 0, //表格的冻结处默认left值
         tdRender: function(tdObj, displayField) {
             //console.log('渲染td的函数');
         },

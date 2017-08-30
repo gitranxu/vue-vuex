@@ -1,8 +1,6 @@
 import adapter from '../lib/mockAdapter';
 export default {
-    queryTable4(store) {
-        // console.log(store);
-        //console.log(store);
+    queryTable(store) {
         $.ajax({
             method: 'get',
             url: 'http://easy-mock.com/mock/598ad5a4a1d30433d85aeda5/getTableMockData/getTableMockData',
@@ -22,9 +20,8 @@ export default {
         });
 
     },
-    queryTable(store) {
+    queryTable1(store) {
         util.FHHApi({
-            //url: '/EM1HBICRM/rptViewDisplayController/getRptView',
             url: store.state.url,
             data: store.getters.getParam,
             success: function(data) {

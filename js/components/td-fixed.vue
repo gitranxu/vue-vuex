@@ -58,8 +58,7 @@ export default {
     computed: {
         ...mapState(['tableDefaultProps']),
         rightStyle() {
-            let left = this.getRightStyleLeft();
-            //console.log(left);
+            let left = this.tableDefaultProps.initRightLeft;
             return {
                 left: left + 'px'
             }
@@ -72,18 +71,6 @@ export default {
             let displayField = tool.getDisplayFieldByKey(displayFields, key);
             let defaultResult = `${td.formattedValue || td.value || ''}`;
             return this.tableDefaultProps.tdRender(td, displayField, defaultResult) || defaultResult;
-        },
-        getRightStyleLeft() {
-            //计算出冻结列的宽度,从displayField中去取宽度,如果没有,则默认为100px
-            let result = 0;
-            let displayFields = this.getDisplayFields();
-            for(let i in displayFields) {
-                if(displayFields[i].fixed == 1 && displayFields[i].isVisible == 1) {
-                    let width = displayFields[i].width || this.tableDefaultProps.thWidth;
-                    result += width - 1;
-                }
-            }
-            return result;
         },
         tdStyle(key, isFixed) {
             //取到对应的(同为冻结或同为不冻结的)前面所有th的宽度和
@@ -162,6 +149,11 @@ export default {
             }
             if(displayField.isGroup == 1) {
                 result.push('group-td');
+                if(this.isTdEmpty(td)) {
+                    result.push('empty-group-td');
+                }else {
+                    result.push('not-empty-group-td');
+                }
             }else {
                 result.push('detail-td');
             }
@@ -175,9 +167,6 @@ export default {
             }
             if(displayField.fixed == 1) {
                 result.push('freezed');
-            }
-            if(this.isTdEmpty(td)) {
-                result.push('empty-group-td');
             }
 
             return result;
@@ -210,15 +199,6 @@ export default {
         &.numberTd{
             text-align: right;
         }
-    }
-    .groupTd.mouseenter{
-        background: #f7f7f7;
-    }
-    &.hover .td{
-        background: #f7f7f7;
-    }
-    &.hover .groupTd{
-        background: #ffffff;
     }
 }
 .left{

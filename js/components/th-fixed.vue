@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import thContent from './th-content.vue';
 export default {
     props: {
@@ -52,8 +52,10 @@ export default {
         //     console.log(th);
         //
         // },
+        ...mapMutations(['setTableDefaultProps']),
         getRightStyleLeft() {
             //计算出冻结列的宽度,从displayField中去取宽度,如果没有,则默认为100px
+            console.log(666);
             let result = 0;
             for(let i in this.displayFields) {
                 if(this.displayFields[i].fixed == 1 && this.displayFields[i].isVisible == 1) {
@@ -61,6 +63,9 @@ export default {
                     result += width - 1;
                 }
             }
+            this.setTableDefaultProps({
+                initRightLeft: result
+            });
             return result;
         },
         thStyle(th, thIndex, isFixed) {
