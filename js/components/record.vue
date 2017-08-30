@@ -1,7 +1,8 @@
 <template>
-    <div class="record" :style="recordStyle">
-        <td-fixed :dataSetObj="trObj">
-        </td-fixed>
+    <div class="record"
+        :style="recordStyle"
+        :class="recordClass">
+        <td-fixed :dataSetObj="trObj"></td-fixed>
     </div>
 </template>
 
@@ -29,6 +30,12 @@ export default {
                 top: top + 'px',
                 zIndex: 9999 - this.trIndex
             }
+        },
+        recordClass() {
+            let className = this.trObj.groupid.formattedValue || this.trObj.groupid.value;
+            return [
+                'group' + className
+            ];
         }
     },
     methods: {

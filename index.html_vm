@@ -9,9 +9,44 @@
 
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="Cache-Control" content="no-siteapp" />
-
+    <style>
+        .demo{
+            width: 800px;
+            height: 300px;
+            position: absolute;
+            top: 200px;
+            left: 40%;
+        }
+    </style>
 </head>
 <body>
-    <div id="application"></div>
+    <div id="application" class="demo"></div>
+    <script type="text/javascript">
+        window.onload = function() {
+            var s = new VueTable({
+                el: '#application',
+                isEdit: 2,
+                thdialog: {
+                    datafilter: true
+                }
+            });
+            s.queryTable();
+            s.setTableDefaultProps({
+                // tdRender(tdObj, displayField, defaultResult) {
+                //     if(displayField.columnName == 'Contact_Name') { //如果是联系人姓名
+                //         return '<div class="test">'+(tdObj.formattedValue || tdObj.value)+'</div>'
+                //     }
+                //     return defaultResult;
+                // },
+                trClick(tdObj, displayField, trObj) {
+                    // console.log(JSON.stringify(tdObj));
+                    // console.log(JSON.stringify(displayField));
+                    // console.log(JSON.stringify(trObj));
+                },
+                //thdialogshow: 0,
+                //fastOrderShow: 0
+            });
+        }
+    </script>
 </body>
 </html>

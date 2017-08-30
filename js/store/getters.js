@@ -12,5 +12,12 @@ export default {
         if(state.tableInfo && state.tableInfo.Value && state.tableInfo.Value.displayFields) {
             return state.tableInfo.Value.displayFields;
         }
+    },
+    getParam(state) {
+        //console.log(123);
+        if(state.tableDefaultProps.displayFields) {
+            state.tableDefaultProps.queryParamsObj = $.extend(state.tableDefaultProps.queryParamsObj, state.tableDefaultProps.displayFields);
+        }
+        return state.tableDefaultProps.queryParamsObj;
     }
 }

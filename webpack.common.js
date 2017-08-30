@@ -8,6 +8,7 @@ module.exports = {
     },
     output: {
         filename: '[name].[hash].bundle.js'
+        //filename: '[name].js'
     },
     module: {
         rules: [
@@ -33,9 +34,13 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(png)$/,
-                use: ['file-loader']
-            }
+        　　　　　test: /\.(png|jpg)$/,
+        　　　　　loader: 'url-loader?limit=8192'
+        　　 }
+            // {
+            //     test: /\.(png)$/,
+            //     use: ['file-loader']
+            // }
         ]
     },
     resolve: {

@@ -6,6 +6,7 @@
         <div class="left">
             <div class="td"
                 v-for="(td, key) in dataSetObj"
+                :class="tdClass(td, key)"
                 v-if="toShow(key, 1)"
                 :style="tdStyle(key, 1)"
                 @click="tdClick(td, key, dataSetObj)"
@@ -21,6 +22,7 @@
         <div class="right" :style="rightStyle">
             <div class="td"
                 v-for="(td, key) in dataSetObj"
+                :class="tdClass(td, key)"
                 v-if="toShow(key, 0)"
                 :style="tdStyle(key, 0)"
                 @click="tdClick(td, key, dataSetObj)"
@@ -57,6 +59,7 @@ export default {
         ...mapState(['tableDefaultProps']),
         rightStyle() {
             let left = this.getRightStyleLeft();
+            //console.log(left);
             return {
                 left: left + 'px'
             }
@@ -67,17 +70,17 @@ export default {
         tdRender(td, key) {
             let displayFields = this.getDisplayFields();
             let displayField = tool.getDisplayFieldByKey(displayFields, key);
-            let defaultResult = `${td.formattedValue || td.value}`;
-            return this.tableDefaultProps.tdRender(td, displayField) || defaultResult;
+            let defaultResult = `${td.formattedValue || td.value || ''}`;
+            return this.tableDefaultProps.tdRender(td, displayField, defaultResult) || defaultResult;
         },
         getRightStyleLeft() {
             //计算出冻结列的宽度,从displayField中去取宽度,如果没有,则默认为100px
             let result = 0;
             let displayFields = this.getDisplayFields();
             for(let i in displayFields) {
-                if(displayFields[i].fixed == 1) {
+                if(displayFields[i].fixed == 1 && displayFields[i].isVisible == 1) {
                     let width = displayFields[i].width || this.tableDefaultProps.thWidth;
-                    result += width;
+                    result += width - 1;
                 }
             }
             return result;
@@ -118,12 +121,18 @@ export default {
                 if(arr[i].fieldID == th.fieldID) {
                     break;
                 }
+                if(arr[i].isVisible == 0) { //如果是隐藏的列,则不加其宽度
+                    continue;
+                }
                 result += (arr[i].width || this.tableDefaultProps.thWidth) - 1; //这里的1是因为div的border是1px
             }
             return result;
         },
         toShow(key, isLeft) {
             let displayField = tool.getDisplayFieldByKey(this.getDisplayFields(), key);
+            if(!displayField) {
+                return false;
+            }
             if(isLeft) {
                 return displayField.fixed == 1 && displayField.isVisible == 1;
             }else {
@@ -141,6 +150,44 @@ export default {
         },
         tdMouseLeave() {
             this.record.isMouseEnter = false;
+        },
+        tdClass(td, key) {
+            //如果当前列是明细列,则加上类名detail-td,否则为groupTd
+            let displayFields = this.getDisplayFields();
+            let displayField = tool.getDisplayFieldByKey(displayFields, key);
+            let result = [];
+            if(displayField.isVisible == 0) { //不显示
+                result.push('hide');
+                return result;
+            }
+            if(displayField.isGroup == 1) {
+                result.push('group-td');
+            }else {
+                result.push('detail-td');
+            }
+
+            if(displayField.fieldType == 'String') {
+                result.push('stringTd');
+            }else if (displayField.fieldType == 'Number') {
+                result.push('numberTd');
+            }else if (displayField.fieldType == 'Date') {
+                result.push('dateTd');
+            }
+            if(displayField.fixed == 1) {
+                result.push('freezed');
+            }
+            if(this.isTdEmpty(td)) {
+                result.push('empty-group-td');
+            }
+
+            return result;
+        },
+        isTdEmpty(td) {
+            if(typeof td == 'string') {
+                return $.trim(td) == '';
+            }else {
+                return $.trim(td.formattedValue || td.value || '') == '';
+            }
         }
     }
 }
@@ -160,6 +207,9 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        &.numberTd{
+            text-align: right;
+        }
     }
     .groupTd.mouseenter{
         background: #f7f7f7;

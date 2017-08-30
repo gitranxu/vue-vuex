@@ -5,8 +5,14 @@ export default {
         */
         this.tdHeight = opt.tableDefaultProps.tdHeight;
         this.opt = opt;
+        this.clearEl(el);//先保证el里面没有留存被分组过的痕迹
         this.scanTable(el);
         this.addEvent(el);
+    },
+
+    clearEl(el) {
+        console.log(el);
+        $(el).find('.groupTd').remove();
     },
 
     scanTable(el) {
@@ -14,26 +20,26 @@ export default {
         //则复制当前元素生成新元素,并增加一个groupTd类名,并将新元素插入当前位置;
         //如果与上一个元素能同组,则判断与上上一个元素能否同级,至到不能同组或为空为止,得到最后一个元素,并在其位
         //置搜索到带groupTd类名且columnName值相等的DOM,修改其style相应值(height,lineHeight)
+        //console.log(el);
         let _this = this;
         let $table = $(el);
         $table.find('.record .td').each(function() {
             let $this = $(this);
             let displayField = JSON.parse($this.attr('data-field'));
             if(displayField.isGroup == 1) {
-                if($this.text()=='少博好人') {
-                    console.log(8888);
-                }
+                // if($this.text()=='少博好人') {
+                //     console.log(8888);
+                // }
                 let $colPrevTd = _this.getColPrevTd($this);
                 if($colPrevTd) {
                     //如果有上一个元素,再判断是否与当前元素能够同组
                     let canGroup = _this.canGroup($this, $colPrevTd);
                     if(canGroup) {
                         let $groupTd = _this.getGroupTd($this.parents('.record'), $this.attr('columnname'));
-                        console.log($groupTd.length);
-                        let height = $groupTd.height() + _this.tdHeight - 1;
+                        let height = $groupTd.outerHeight() + _this.tdHeight - 1;
                         $groupTd.css({
                             height: height + 'px',
-                            lineHeight: height + 'px'
+                            lineHeight: (height - 28) + 'px' //28是上下内边距加上下边框的高度
                         });
                     }else {
                         let $clone = $this.clone();

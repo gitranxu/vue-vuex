@@ -1,7 +1,7 @@
 <template>
     <div class="rx-table">
         <div class="expand" :style="getExpandStyle"></div>
-        <div class="table">
+        <div class="table" :style="getTableStyle">
             <div class="head">
                 <th-fixed :displayFields="tableInfo.displayFields">
                 </th-fixed>
@@ -22,11 +22,18 @@ import record from './record.vue';
 import tool from '../lib/tool.js';
 import groupTable from '../lib/groupTable.js';
 export default {
+    data() {
+        return {
+            initRightLeft : 0 //.right的初始left值
+        }
+    },
     mounted(el) {
+        let _this = this;
         let init_left = $('.table').position().left;
         let init_top = $('.table').position().top;
 
-        let init_left1 = $('.right').position().left;
+        this.initRightLeft = $('.right').position().left;
+        console.log(this.initRightLeft);
         let init_body_top = $('.body').position().top;
 
         $(this.$el).scrollbar({
@@ -36,15 +43,27 @@ export default {
                     top: init_top + y.scroll
                 });
 
-                let left = init_left1 - x.scroll;
+                let left = _this.initRightLeft - x.scroll;
                 $('.right').css({
                     left: left
                 });
                 $('.body').css({
                     top: init_body_top - y.scroll
                 });
+            },
+            "onInit": function() {
+                $(this.wrapper).css({
+                    width: _this.tableDefaultProps.tableWidth,
+                    height: _this.tableDefaultProps.tableHeight
+                });
             }
         });
+        $('.rx-table .scroll-y').css("top", this.tableDefaultProps.thHeight);
+    },
+    updated() {
+        //console.log(111);
+        //console.log($('.right').position().left);
+        this.initRightLeft = $('.right').position().left;
     },
     props: {
         tableInfo: {
@@ -57,9 +76,20 @@ export default {
     },
     computed: {
         ...mapState(['tableDefaultProps']),
+        getTableStyle() {
+            let height = this.tableDefaultProps.tableHeight;
+            let width = this.tableDefaultProps.tableWidth;
+            return {
+                height: height + 'px',
+                width: width + 'px'
+            }
+        },
         getExpandStyle() {
             //高度等于th高度+(tr高度 - 1)*tr行数
-            let height = this.tableDefaultProps.thHeight + (this.tableDefaultProps.tdHeight - 1) * this.tableInfo.dataSet.length;
+            let height = this.tableDefaultProps.thHeight + (this.tableDefaultProps.tdHeight - 1) * this.tableInfo.dataSet.length + 1;
+            if(height < this.tableDefaultProps.tableHeight) {
+                height = this.tableDefaultProps.tableHeight; //当内容高度小于表格高度时,内容高度要等于表格高度,这样才能保证左右移动滚动条能正常使用.
+            }
             //宽度等于所有th宽度之和
             let width = this.getThTotalWidth();
             return {
@@ -67,17 +97,20 @@ export default {
                 width: width + 'px'
             }
         },
+
         bodyStyle() {
-            let top = this.tableDefaultProps.thHeight;
+            let top = this.tableDefaultProps.thHeight - 1;
             return {
                 top: top + 'px'
             }
         },
         bindingOpt() {
+            //console.log(777777);
             return {
                 tableDefaultProps: this.tableDefaultProps,
                 getDisplayFields: this.getDisplayFields,
-                tool: tool
+                tool: tool,
+                componentObj: this
             }
         }
     },
@@ -91,13 +124,16 @@ export default {
                     result += (displayField.width || _this.tableDefaultProps.thWidth) - 1;
                 }
             });
+            result += 1;
             return result;
         }
     },
     directives: {
         groupTable(el, binding) {
-            console.log(binding.value);
-            groupTable.groupTable(el, binding.value);
+            binding.value.componentObj.$nextTick(function() {
+                groupTable.groupTable(el, binding.value);
+            });
+
         }
     }
 }
@@ -145,6 +181,33 @@ export default {
             position: absolute;
             left: 0;
             top: 0;
+            .detail-td{
+                //border: 0 solid #eee; 因为每行的z-index逐行递减,如果这样设置,则最上面的top线是显示不出来的
+            }
+            &.group-1 {
+                .detail-td{
+                    //border: 1px solid #eee;
+                    background: #fff;
+                }
+            }
+            &.group1, &.group3, &.group5 {
+                .detail-td, .empty-group-td{
+                    background: #fffef0;
+                }
+            }
+            &.group2, &.group4 {
+                .detail-td, .empty-group-td{
+                    background: #f9f7e4;
+                }
+            }
+            &.group0 {
+                .detail-td, .empty-group-td{
+                    background: #fffbd1;
+                }
+            }
+            .freezed {
+                font-weight: bold;
+            }
         }
     }
 }

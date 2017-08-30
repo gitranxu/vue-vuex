@@ -6,18 +6,18 @@ const webpack = require('webpack');
 module.exports = merge(common, {
     output: {
         path: resolve(__dirname, 'dist'),
-        publicPath: '/vue-memory-game/'
+        publicPath: '/my-table-vue-vuex/'
     },
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"'
             }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        })
+        })//,
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
     ]
 });
